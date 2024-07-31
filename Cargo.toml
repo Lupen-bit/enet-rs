@@ -12,10 +12,10 @@ keywords = ["network", "gamedev"]
 categories = ["game-engines", "network-programming"]
 license = "Apache-2.0 OR MIT"
 exclude = [
-        ".github/", # ignore github workflows
-        "flake.nix", # ignore nix flake files
+        ".github/",     # ignore github workflows
+        "flake.nix",    # ignore nix flake files
         "flake.lock",
-        "check.sh", # ignore check script
+        "check.sh",     # ignore check script
         "rustfmt.toml", # ignore rustfmt config
 ]
 
@@ -23,7 +23,7 @@ exclude = [
 maintenance = { status = "passively-maintained" }
 
 [dependencies]
-enet-sys = "1.0.0"
+enet-sys = { path = "enet-sys" }
 thiserror = "1.0.30"
 
 [dev-dependencies]

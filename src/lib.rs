@@ -157,6 +157,8 @@ impl Enet {
         max_channel_count: ChannelLimit,
         incoming_bandwidth: BandwidthLimit,
         outgoing_bandwidth: BandwidthLimit,
+        using_new_packet: bool,
+        using_new_packet_for_server: bool,
     ) -> Result<Host<T>, Error> {
         let addr = address.map(Address::to_enet_address);
         let inner = unsafe {
@@ -170,6 +172,13 @@ impl Enet {
                 outgoing_bandwidth.to_enet_u32(),
             )
         };
+
+        unsafe {
+            (*inner).checksum = Some(enet_sys::enet_crc32);
+            enet_sys::enet_host_compress_with_range_coder(inner);
+            (*inner).usingNewPacket = using_new_packet as u8;
+            (*inner).usingNewPacketForServer = using_new_packet_for_server as u8;
+        }
 
         if inner.is_null() {
             return Err(Error(0));
@@ -232,6 +241,8 @@ mod tests {
             ChannelLimit::Maximum,
             BandwidthLimit::Unlimited,
             BandwidthLimit::Unlimited,
+            false,
+            false,
         )
         .unwrap();
     }

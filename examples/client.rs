@@ -16,6 +16,8 @@ fn main() -> anyhow::Result<()> {
             ChannelLimit::Maximum,
             BandwidthLimit::Unlimited,
             BandwidthLimit::Unlimited,
+            false,
+            false,
         )
         .context("could not create host")?;
 
